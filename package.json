@@ -1,0 +1,17 @@
+{
+    "devDependencies": {
+        "@types/pdfkit": "^0.12.9",
+        "nodemon": "^2.0.22",
+        "prettier": "2.8.8",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.4"
+    },
+    "dependencies": {
+        "axios": "^1.4.0",
+        "pdfkit": "^0.13.0"
+    },
+    "scripts": {
+        "start:dev": "npx nodemon",
+        "format": "npx prettier --write ."
+    }
+}

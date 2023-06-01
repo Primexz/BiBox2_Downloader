@@ -2,12 +2,39 @@ import { PDFWriter } from "./pdf_writer"
 import fsProm from "fs/promises"
 import fs from "fs"
 import { BiboxFetcher } from "./bibox_fetcher"
+import chalk from "chalk"
+import figlet from "figlet"
+import inquirer from "inquirer"
 
-const bookId = 0
 const bearer = ""
 
 ;(async () => {
-    const biBoxFetcher = new BiboxFetcher(bookId, bearer)
+    console.log(
+        chalk.yellow(
+            figlet.textSync("BiBox2_Download", { horizontalLayout: "full" })
+        )
+    )
+
+    const results = await inquirer.prompt([
+        {
+            name: "book_id",
+            type: "input",
+            message:
+                "Please enter your Book Id. You can find it in the URL at BiBox2: https://bibox2.westermann.de/book/XXXX/page/1",
+            validate: (value) => {
+                if (Number.isNaN(parseInt(value)))
+                    return "invalid input. enter a valid number"
+                else return true
+            },
+        },
+        {
+            name: "bearer_token",
+            type: "password",
+            message: "Please enter your bearer token.",
+        },
+    ])
+
+    const biBoxFetcher = new BiboxFetcher(results.book_id, results.bearer_token)
     const bookData = await biBoxFetcher.fetchBookData()
 
     const pages: {
